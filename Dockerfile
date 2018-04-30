@@ -3,6 +3,7 @@ FROM php:7.2-fpm-alpine as ischool-php
 # add php modules
 RUN apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
+    && apk add --no-cache \
         curl-dev \
         imagemagick-dev \
         libtool \
@@ -15,7 +16,6 @@ RUN apk add --no-cache --virtual .build-deps \
         libpng-dev \
         libjpeg-turbo-dev \
         libwebp-dev \
-    && apk add --no-cache \
         curl \
         imagemagick \
         mysql-client \
