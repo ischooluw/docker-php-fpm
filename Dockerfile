@@ -3,34 +3,22 @@ FROM php:7.2-fpm-alpine as ischool-php
 # add php modules
 RUN apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
-    && apk add --no-cache \
-        curl-dev \
-        imagemagick-dev \
-        libtool \
-        libxml2-dev \
-        postgresql-dev \
-        sqlite-dev \
-        # For GD
         freetype-dev \
-        libjpeg-turbo \
         libpng-dev \
         libjpeg-turbo-dev \
+        libtool \
         libwebp-dev \
-        curl \
-        imagemagick \
-        mysql-client \
-        postgresql-libs \
-    # Install Imagick from Pecl
-    && pecl install imagick \
-    && docker-php-ext-enable imagick \
-    # Threads
-    && NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
-    # Install PHP modules
-    && docker-php-ext-install -j${NPROC} \
-        curl \
+        libxml2-dev \
+        sqlite-dev \
+    && apk add --no-cache \
+        imagemagick-dev \
+        postgresql-dev \
+        bash \
+    # Add some Extensions
+    && docker-php-ext-install \
+        ctype \
         iconv \
-        gd \
-        mbstring \
+        # gd \
         pdo \
         pdo_mysql \
         pdo_pgsql \
@@ -40,13 +28,19 @@ RUN apk add --no-cache --virtual .build-deps \
         xml \
         zip \
     # Configure GD
-    && docker-php-ext-configure gd \
-        --with-gd \
-        --with-jpeg-dir=/usr/include \
-        --with-png-dir=/usr/include \
-        --with-webp-dir=/usr/include \
-        --with-freetype-dir=/usr/include \
+    # && docker-php-ext-configure gd \
+    #     --with-gd \
+    #     --with-jpeg-dir=/usr/include \
+    #     --with-png-dir=/usr/include \
+    #     --with-webp-dir=/usr/include \
+    #     --with-freetype-dir=/usr/include \
+    # Install Imagick from Pecl
+    && pecl install imagick \
+    && docker-php-ext-enable imagick \
     # Clean up
-    && apk del -f .build-deps
+    && pecl clear-cache \
+	&& rm -rf /tmp/pear ~/.pearrc \
+	&& apk del .build-deps
+
 
 WORKDIR /var/www
