@@ -42,5 +42,8 @@ RUN apk add --no-cache --virtual .build-deps \
 	&& rm -rf /tmp/pear ~/.pearrc \
 	&& apk del .build-deps
 
+# Make errors log to STDOUT
+RUN sed -i 's/\;error_log.*/error_log = \/proc\/self\/fd\/2/' /usr/local/etc/php-fpm.conf
+
 
 WORKDIR /var/www
