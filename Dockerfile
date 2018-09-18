@@ -28,12 +28,11 @@ RUN apk add --no-cache --virtual .build-deps \
         xml \
         zip \
     # Configure GD
-    # && docker-php-ext-configure gd \
-    #     --with-gd \
-    #     --with-jpeg-dir=/usr/include \
-    #     --with-png-dir=/usr/include \
-    #     --with-webp-dir=/usr/include \
-    #     --with-freetype-dir=/usr/include \
+    && docker-php-ext-configure gd \
+        --enable-gd-native-ttf \
+        --with-jpeg-dir=/usr/lib \
+        --with-freetype-dir=/usr/include/freetype2 \
+    && docker-php-ext-install gd \
     # Install Imagick from Pecl
     && pecl install imagick \
     && docker-php-ext-enable imagick \
