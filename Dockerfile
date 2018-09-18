@@ -4,17 +4,17 @@ RUN docker-php-source extract \
     # Add some build packages
     && apk add --no-cache --virtual .dependencies \
         $PHPIZE_DEPS \
-        freetype-dev \
+    # Add some persistent packages
+    && apk add --no-cache \
+        bash \
         imagemagick-dev \
+        freetype-dev \
         libjpeg-turbo-dev \
         # libpng-dev \
         # libwebp-dev \
         libxml2-dev \
         postgresql-dev \
         sqlite-dev \
-    # Add some persistent packages
-    && apk add --no-cache \
-        bash \
     # Set configuration for GD
     && docker-php-ext-configure gd \
         --with-freetype-dir=/usr/include \
