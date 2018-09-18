@@ -10,27 +10,27 @@ RUN apk add --no-cache --virtual .build-deps \
         libwebp-dev \
         libxml2-dev \
         sqlite-dev \
-    && apk add --no-cache \
         imagemagick-dev \
         postgresql-dev \
+    && apk add --no-cache \
         bash \
     # Add some Extensions
     && docker-php-ext-install \
         ctype \
         iconv \
-        # gd \
+        gd \
         pdo \
         pdo_mysql \
         pdo_pgsql \
         pdo_sqlite \
         pcntl \
+        posix \
         tokenizer \
         xml \
         zip \
     # Configure GD
-    && docker-php-ext-install gd \
     && docker-php-ext-configure gd \
-    #     --with-gd \
+        --with-gd \
         --with-jpeg-dir=/usr/include \
         --with-png-dir=/usr/include \
         --with-webp-dir=/usr/include \
