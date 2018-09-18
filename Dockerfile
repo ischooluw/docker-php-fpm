@@ -1,4 +1,4 @@
-FROM php:7.2-fpm-alpine as ischool-php
+FROM php:7.2-fpm-alpine
 
 RUN docker-php-source extract \
     # Add some build packages
