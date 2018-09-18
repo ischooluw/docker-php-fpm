@@ -28,18 +28,21 @@ RUN apk add --no-cache --virtual .build-deps \
         xml \
         zip \
     # Configure GD
-    && docker-php-ext-configure gd \
-        --enable-gd-native-ttf \
-        --with-jpeg-dir=/usr/lib \
-        --with-freetype-dir=/usr/include/freetype2 \
     && docker-php-ext-install gd \
+    && docker-php-ext-configure gd \
+    #     --with-gd \
+        --with-jpeg-dir=/usr/include \
+        --with-png-dir=/usr/include \
+        --with-webp-dir=/usr/include \
+        --with-freetype-dir=/usr/include \
     # Install Imagick from Pecl
     && pecl install imagick \
     && docker-php-ext-enable imagick \
     # Clean up
     && pecl clear-cache \
 	&& rm -rf /tmp/pear ~/.pearrc \
-	&& apk del .build-deps
+	&& apk del .build-deps \
+    && docker-php-source delete
 
 # Make errors log to STDOUT
 RUN sed -i 's/\;error_log.*/error_log = \/proc\/self\/fd\/2/' /usr/local/etc/php-fpm.conf
