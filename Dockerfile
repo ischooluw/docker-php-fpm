@@ -4,23 +4,31 @@ RUN docker-php-source extract \
     # Add some build packages
     && apk add --no-cache --virtual .dependencies \
         $PHPIZE_DEPS \
-    # Add some persistent packages
-    && apk add --no-cache \
-        bash \
-        imagemagick-dev \
         freetype-dev \
+        imagemagick-dev \
         libjpeg-turbo-dev \
-        # libpng-dev \
-        # libwebp-dev \
+        libpng-dev \
+        libwebp-dev \
         libxml2-dev \
         postgresql-dev \
         sqlite-dev \
+    # Add some persistent packages
+    && apk add --no-cache \
+        bash \
+        freetype \
+        imagemagick-libs \
+        libjpeg-turbo \
+        libpng \
+        libwebp \
+        libxml2 \
+        postgresql-libs \
+        sqlite-libs \
     # Set configuration for GD
     && docker-php-ext-configure gd \
         --with-freetype-dir=/usr/include \
         --with-jpeg-dir=/usr/include \
-        # --with-png-dir=/usr/include \
-        # --with-webp-dir=/usr/include \
+        --with-png-dir=/usr/include \
+        --with-webp-dir=/usr/include \
     # Add some Extensions
     && docker-php-ext-install \
         ctype \
