@@ -54,4 +54,6 @@ RUN docker-php-source extract \
 # Make errors log to STDOUT
 RUN sed -i 's/\;error_log.*/error_log = \/proc\/self\/fd\/2/' /usr/local/etc/php-fpm.conf
 
+COPY ./php.ini /usr/local/etc/php/php.ini
+
 WORKDIR /var/www
