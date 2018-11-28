@@ -17,6 +17,7 @@ RUN docker-php-source extract \
         bash \
         freetype \
         imagemagick-libs \
+        imagemagick \
         libjpeg-turbo \
         libpng \
         libwebp \
