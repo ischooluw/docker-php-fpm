@@ -22,6 +22,7 @@ RUN docker-php-source extract \
         libwebp \
         libxml2 \
         postgresql-libs \
+        tzdata \
         sqlite-libs \
     # Set configuration for GD
     && docker-php-ext-configure gd \
