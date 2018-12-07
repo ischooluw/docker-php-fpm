@@ -4,26 +4,29 @@ RUN docker-php-source extract \
     # Add some build packages
     && apk add --no-cache --virtual .dependencies \
         $PHPIZE_DEPS \
+        freetds-dev \
         freetype-dev \
         imagemagick-dev \
         libjpeg-turbo-dev \
         libpng-dev \
         libwebp-dev \
         libxml2-dev \
-        postgresql-dev \
+        # postgresql-dev \
         sqlite-dev \
+        unixodbc-dev \
     # Add some persistent packages
     && apk add --no-cache \
         bash \
+        freetds \
         freetype \
         imagemagick-libs \
-        imagemagick \
         libjpeg-turbo \
         libpng \
         libwebp \
         libxml2 \
-        postgresql-libs \
+        # postgresql-libs \
         tzdata \
+        unixodbc \
         sqlite-libs \
     # Set configuration for GD
     && docker-php-ext-configure gd \
@@ -31,14 +34,17 @@ RUN docker-php-source extract \
         --with-jpeg-dir=/usr/include \
         --with-png-dir=/usr/include \
         --with-webp-dir=/usr/include \
+    && docker-php-ext-configure pdo_odbc --with-pdo-odbc=unixODBC,/usr \
     # Add some Extensions
     && docker-php-ext-install \
         ctype \
         iconv \
         gd \
         pdo \
+        pdo_dblib \
         pdo_mysql \
-        pdo_pgsql \
+        pdo_odbc \
+        # pdo_pgsql \
         pdo_sqlite \
         pcntl \
         posix \
