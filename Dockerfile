@@ -19,6 +19,8 @@ RUN docker-php-source extract \
         bash \
         freetds \
         freetype \
+        # imagemagick is big, but needed for PDF support
+        imagemagick \
         imagemagick-libs \
         libjpeg-turbo \
         libpng \
