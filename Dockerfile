@@ -11,6 +11,7 @@ RUN docker-php-source extract \
         libpng-dev \
         libwebp-dev \
         libxml2-dev \
+        libzip-dev \
         # postgresql-dev \
         sqlite-dev \
         unixodbc-dev \
@@ -24,6 +25,7 @@ RUN docker-php-source extract \
         libpng \
         libwebp \
         libxml2 \
+        libzip \
         # postgresql-libs \
         tzdata \
         unixodbc \
