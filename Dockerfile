@@ -1,4 +1,4 @@
-FROM php:7.3-fpm-alpine
+FROM php:7.4-fpm-alpine
 
 RUN docker-php-source extract \
     # Add some build packages
@@ -32,10 +32,9 @@ RUN docker-php-source extract \
         sqlite-libs \
     # Set configuration for GD
     && docker-php-ext-configure gd \
-        --with-freetype-dir=/usr/include \
-        --with-jpeg-dir=/usr/include \
-        --with-png-dir=/usr/include \
-        --with-webp-dir=/usr/include \
+        --with-freetype \
+        --with-jpeg \
+        --with-webp \
     && docker-php-ext-configure pdo_odbc --with-pdo-odbc=unixODBC,/usr \
     # Add some Extensions
     && docker-php-ext-install \
