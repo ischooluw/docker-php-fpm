@@ -1,4 +1,4 @@
-FROM php:7.2-fpm-alpine
+FROM php:8.0-fpm-alpine
 
 RUN docker-php-source extract \
     # Add some build packages
@@ -14,6 +14,7 @@ RUN docker-php-source extract \
         # postgresql-dev \
         sqlite-dev \
         unixodbc-dev \
+        libzip-dev \
     # Add some persistent packages
     && apk add --no-cache \
         bash \
@@ -32,10 +33,9 @@ RUN docker-php-source extract \
         sqlite-libs \
     # Set configuration for GD
     && docker-php-ext-configure gd \
-        --with-freetype-dir=/usr/include \
-        --with-jpeg-dir=/usr/include \
-        --with-png-dir=/usr/include \
-        --with-webp-dir=/usr/include \
+        --with-freetype \
+        --with-jpeg \
+        --with-webp \
     && docker-php-ext-configure pdo_odbc --with-pdo-odbc=unixODBC,/usr \
     # Add some Extensions
     && docker-php-ext-install \
@@ -54,10 +54,10 @@ RUN docker-php-source extract \
         xml \
         zip \
     # Install Imagick from Pecl
-    && pecl install imagick \
-    && docker-php-ext-enable imagick \
+    # && pecl install imagick \
+    # && docker-php-ext-enable imagick \
     # Clean up
-    && pecl clear-cache \
+    # && pecl clear-cache \
     && apk del --purge .dependencies \
     && docker-php-source delete
 
