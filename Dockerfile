@@ -27,6 +27,7 @@ RUN docker-php-source extract \
         libpng \
         libwebp \
         libxml2 \
+        libzip \
         # postgresql-libs \
         tzdata \
         unixodbc \
