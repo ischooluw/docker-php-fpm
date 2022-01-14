@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-alpine
+FROM php:8.0-fpm-alpine
 
 RUN docker-php-source extract \
     # Add some build packages
@@ -15,11 +15,14 @@ RUN docker-php-source extract \
         # postgresql-dev \
         sqlite-dev \
         unixodbc-dev \
+        libzip-dev \
     # Add some persistent packages
     && apk add --no-cache \
         bash \
         freetds \
         freetype \
+        # imagemagick is big, but needed for PDF support
+        imagemagick \
         imagemagick-libs \
         libjpeg-turbo \
         libpng \
@@ -53,10 +56,10 @@ RUN docker-php-source extract \
         xml \
         zip \
     # Install Imagick from Pecl
-    && pecl install imagick \
-    && docker-php-ext-enable imagick \
+    # && pecl install imagick \
+    # && docker-php-ext-enable imagick \
     # Clean up
-    && pecl clear-cache \
+    # && pecl clear-cache \
     && apk del --purge .dependencies \
     && docker-php-source delete
 
