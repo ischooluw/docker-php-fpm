@@ -56,10 +56,10 @@ RUN docker-php-source extract \
         xml \
         zip \
     # Install Imagick from Pecl
-    # && pecl install imagick \
-    # && docker-php-ext-enable imagick \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick \
     # Clean up
-    # && pecl clear-cache \
+    && pecl clear-cache \
     && apk del --purge .dependencies \
     && docker-php-source delete
 
