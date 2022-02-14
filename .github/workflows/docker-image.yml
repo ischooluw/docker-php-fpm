@@ -17,34 +17,36 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
-      
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      
-      # Our tag names are like v8.0.4, we want to see if 8.0 is in the default branch, this extracts the major.minor version
-      - name: Extract the major.minor version from the tag
-        id: get-tag-ver
+
+      - name: Determine if we should tag with latest
+        id: get-tag-latest
         uses: actions/github-script@v6
         with:
           script: |
-            const ver = context.ref.substring(context.ref.indexOf('/v')+2, context.ref.lastIndexOf('.'));
-            core.setOutput('ver', ver)
-      
+            const ver = context.ref.substring(context.ref.indexOf('v')+1, context.ref.lastIndexOf('.'))
+            const tag_latest = (context.payload.repository.default_branch.indexOf(ver) == 0)
+            console.log("Major.minor is: " + ver)
+            console.log("Default branch is: " + context.payload.repository.default_branch)
+            console.log("tag latest? : " + (tag_latest ? "true" : "false"))
+            core.setOutput('latest', tag_latest)
+
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v3
         with:
           images: uwischool/php-fpm
           flavor: |
-            latest=false
+            latest=${{ steps.get-tag-latest.outputs.latest }}
           tags: |
-            type=raw,value=latest,enable=${{ !contains(github.ref, 'x') && startsWith(steps.get-tag-ver.outputs.ver, github.event.repository.default_branch) }}
             type=semver,pattern={{version}},enable=${{ !contains(github.ref, 'x') }}
             type=semver,pattern={{major}}.{{minor}},enable=${{ !contains(github.ref, 'x') }}
-      
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
