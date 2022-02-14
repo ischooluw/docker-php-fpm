@@ -4,7 +4,8 @@ Hosted on Docker Hub as [uwischool/php-fpm](https://hub.docker.com/r/uwischool/p
 
 ## Supported tags and respective Dockerfile links
 
-* `latest` [(latest/dockerfile)](https://bitbucket.org/uwischool/php-fpm/src/master/Dockerfile?at=master&fileviewer=file-view-default)
+* [`latest`, `8.0`](https://github.com/ischooluw/docker-php-fpm/blob/8.0.x/Dockerfile)
+* [`7.4`](https://github.com/ischooluw/docker-php-fpm/blob/7.4.x/Dockerfile)
 
 
 ## Description
