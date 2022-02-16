@@ -6,7 +6,7 @@ RUN docker-php-source extract \
         $PHPIZE_DEPS \
         freetds-dev \
         freetype-dev \
-        imagemagick-dev \
+		imagemagick-dev \
         libjpeg-turbo-dev \
         libpng-dev \
         libwebp-dev \
@@ -20,7 +20,8 @@ RUN docker-php-source extract \
         bash \
         freetds \
         freetype \
-        imagemagick-libs \
+		imagemagick \
+		php7-imagick \
         libjpeg-turbo \
         libpng \
         libwebp \
@@ -51,12 +52,14 @@ RUN docker-php-source extract \
         posix \
         tokenizer \
         xml \
-        zip \
+        zip 
+        
     # Install Imagick from Pecl
-    && pecl install imagick \
-    && docker-php-ext-enable imagick \
+RUN pecl install imagick \
+    && docker-php-ext-enable --ini-name 20-imagick.ini imagick
+    
     # Clean up
-    && pecl clear-cache \
+RUN pecl clear-cache \
     && apk del --purge .dependencies \
     && docker-php-source delete
 
