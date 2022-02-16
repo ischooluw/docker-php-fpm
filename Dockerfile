@@ -6,7 +6,7 @@ RUN docker-php-source extract \
         $PHPIZE_DEPS \
         freetds-dev \
         freetype-dev \
-        # imagemagick-dev \
+        imagemagick-dev \
         libjpeg-turbo-dev \
         libpng-dev \
         libwebp-dev \
@@ -55,12 +55,13 @@ RUN docker-php-source extract \
         xml \
         zip 
 
-# Install Imagick (needed to process PDFs)
 RUN apk add --no-cache \
     imagemagick \
     imagemagick-libs \
-    php8-pecl-imagick \
-    && pecl install imagick \
+    php8-pecl-imagick
+
+# Install Imagick from Pecl
+RUN pecl install imagick \
     && docker-php-ext-enable --ini-name 20-imagick.ini imagick
     
 # Clean up
