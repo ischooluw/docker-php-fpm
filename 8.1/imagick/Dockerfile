@@ -11,7 +11,6 @@ RUN docker-php-source extract \
         libpng-dev \
         libwebp-dev \
         libzip-dev \
-        # postgresql-dev \
         unixodbc-dev \
         libzip-dev \
     # Add some persistent packages
@@ -25,7 +24,6 @@ RUN docker-php-source extract \
         libwebp \
         libxml2 \
         libzip \
-        # postgresql-libs \
         tzdata \
         unixodbc \
     # Set configuration for GD
@@ -40,7 +38,6 @@ RUN docker-php-source extract \
         pdo_dblib \
         pdo_mysql \
         pdo_odbc \
-        # pdo_pgsql \
         pcntl \
         zip 
 

@@ -35,10 +35,9 @@ RUN docker-php-source extract \
         pdo_mysql \
         pdo_odbc \
         pcntl \
-        zip 
-
-# Clean up
-RUN pecl clear-cache \
+        zip \
+    # Cleanup
+    && pecl clear-cache \
     && apk del --purge .dependencies \
     && docker-php-source delete
 
