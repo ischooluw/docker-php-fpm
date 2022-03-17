@@ -32,37 +32,37 @@ jobs:
             if(!context.ref.match(/^refs\/tags\/v\d+\.\d+\.\d+(\-[a-zA-Z0-9]+)?$/)){
               throw new Error('Invalid git tag')
             }
-            
+
             var tag_latest = false
             var suffix = ""
             var dockerdir = 'default'
-            
+
             console.log("Ref: " + context.ref)
             const tag = context.ref.substring(context.ref.indexOf('v')+1)
             console.log(tag)
-            
+
             const ver_full = tag.match(/^\d+\.\d+\.\d+/gm)[0]
             console.log(ver_full)
-           	
+
             const ver_minor = ver_full.match(/^\d+\.\d+/gm)[0]
-            
+
             console.log("Major.minor is: " + ver_minor)
             console.log("Default branch is: " + context.payload.repository.default_branch)
-            
+
             if(context.ref.indexOf('-') >= 0){
               tag_latest = false
               suffix = dockerdir = context.ref.match(/\-(.*)/)[1]
               console.log('Suffix: '+suffix)
               if(suffix == ""){
-              	throw new Error('Invalid Suffix')
+                throw new Error('Invalid Suffix')
               }
             }else{
               tag_latest = (context.payload.repository.default_branch.indexOf(ver_minor) == 0)
             }
-            
+
             const docker_context = ver_minor+'/'+dockerdir+'/'
             const docker_file = docker_context+'Dockerfile'
-            
+
             console.log('========= OUTPUT =========')
             console.log("tag_latest : " + tag_latest)
             console.log('ver_full: '+ver_full)
@@ -70,7 +70,7 @@ jobs:
             console.log('docker_context: '+docker_context)
             console.log('docker_file: '+docker_file)
             console.log('tag_suffix: '+suffix)
-            
+
             core.setOutput('tag_latest', tag_latest)
             core.setOutput('ver_full', ver_full)
             core.setOutput('ver_minor', ver_minor)
