@@ -34,7 +34,7 @@ jobs:
             }
 
             var tag_latest = false
-            var suffix = ""
+            var tag_suffix = ""
             var dockerdir = 'default'
 
             console.log("Ref: " + context.ref)
@@ -51,9 +51,9 @@ jobs:
 
             if(context.ref.indexOf('-') >= 0){
               tag_latest = false
-              suffix = dockerdir = context.ref.match(/\-(.*)/)[1]
-              console.log('Suffix: '+suffix)
-              if(suffix == ""){
+              tag_suffix = dockerdir = context.ref.match(/\-(.*)/)[1]
+              console.log('Suffix: '+tag_suffix)
+              if(tag_suffix == ""){
                 throw new Error('Invalid Suffix')
               }
             }else{
@@ -69,7 +69,7 @@ jobs:
             console.log('ver_minor: '+ver_minor)
             console.log('docker_context: '+docker_context)
             console.log('docker_file: '+docker_file)
-            console.log('tag_suffix: '+suffix)
+            console.log('tag_suffix: '+tag_suffix)
 
             core.setOutput('tag_latest', tag_latest)
             core.setOutput('ver_full', ver_full)
