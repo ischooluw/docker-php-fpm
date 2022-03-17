@@ -69,14 +69,14 @@ jobs:
             console.log('ver_minor: '+ver_minor)
             console.log('docker_context: '+docker_context)
             console.log('docker_file: '+docker_file)
-            console.log('tag_suffix: '+tag_suffix)
+            console.log('tag_suffix: '+(tag_suffix != "" ? '-'+tag_suffix : ""))
 
             core.setOutput('tag_latest', tag_latest)
             core.setOutput('ver_full', ver_full)
             core.setOutput('ver_minor', ver_minor)
             core.setOutput('docker_context', docker_context)
             core.setOutput('docker_file', docker_file)
-            core.setOutput('tag_suffix', '-'+tag_suffix)
+            core.setOutput('tag_suffix', (tag_suffix != "" ? '-'+tag_suffix : ""))
       
       - name: Check file existence
         id: check_files
