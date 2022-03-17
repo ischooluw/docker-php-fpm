@@ -4,11 +4,11 @@ Hosted on Docker Hub as [uwischool/php-fpm](https://hub.docker.com/r/uwischool/p
 
 ## Supported tags and respective Dockerfile links
 
-* [`latest`, `8.1`](docker-php-fpm/blob/main/8.1/default/Dockerfile) [`8.1-imagick`](docker-php-fpm/blob/main/8.1/imagick/Dockerfile) 
-* [`8.0`](docker-php-fpm/blob/main/8.0/default/Dockerfile) [`8.0-imagick`](docker-php-fpm/blob/main/8.0/imagick/Dockerfile) 
-* [`7.4`](docker-php-fpm/blob/main/7.4/default/Dockerfile) [`7.4-imagick`](docker-php-fpm/blob/main/7.4/imagick/Dockerfile) 
-* [`7.2`](docker-php-fpm/blob/main/7.2/default/Dockerfile) [`7.2-mcrypt`](docker-php-fpm/blob/main/7.2/mcrypt/Dockerfile) 
-* [`5.6`](docker-php-fpm/blob/main/5.6/default/Dockerfile) 
+* [`latest`, `8.1`](https://github.com/ischooluw/docker-php-fpm/blob/main/8.1/default/Dockerfile) [`8.1-imagick`](https://github.com/ischooluw/docker-php-fpm/blob/main/8.1/imagick/Dockerfile) 
+* [`8.0`](https://github.com/ischooluw/docker-php-fpm/blob/main/8.0/default/Dockerfile) [`8.0-imagick`](https://github.com/ischooluw/docker-php-fpm/blob/main/8.0/imagick/Dockerfile) 
+* [`7.4`](https://github.com/ischooluw/docker-php-fpm/blob/main/7.4/default/Dockerfile) [`7.4-imagick`](https://github.com/ischooluw/docker-php-fpm/blob/main/7.4/imagick/Dockerfile) 
+* [`7.2`](https://github.com/ischooluw/docker-php-fpm/blob/main/7.2/default/Dockerfile) [`7.2-mcrypt`](https://github.com/ischooluw/docker-php-fpm/blob/main/7.2/mcrypt/Dockerfile) 
+* [`5.6`](https://github.com/ischooluw/docker-php-fpm/blob/main/5.6/default/Dockerfile) 
 
 
 ## Description
