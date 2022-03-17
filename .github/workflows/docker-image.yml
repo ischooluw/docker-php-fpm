@@ -23,20 +23,83 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Extract major.minor, suffix, and dockerfile location
+        id: pre-meta
+        uses: actions/github-script@v6
+        with:
+          script: |
+            if(!context.ref.match(/^refs\/tags\/v\d+\.\d+\.\d+(\-[a-zA-Z0-9]+)?$/)){
+              throw new Error('Invalid git tag')
+            }
+            
+            var tag_latest = false
+            var suffix = ""
+            var dockerdir = 'default'
+            
+            console.log("Ref: " + context.ref)
+            const tag = context.ref.substring(context.ref.indexOf('v')+1)
+            console.log(tag)
+            
+            const ver_full = tag.match(/^\d+\.\d+\.\d+/gm)[0]
+            console.log(ver_full)
+           	
+            const ver_minor = ver_full.match(/^\d+\.\d+/gm)[0]
+            
+            console.log("Major.minor is: " + ver_minor)
+            console.log("Default branch is: " + context.payload.repository.default_branch)
+            
+            if(context.ref.indexOf('-') >= 0){
+              tag_latest = false
+              suffix = dockerdir = context.ref.match(/\-(.*)/)[1]
+              console.log('Suffix: '+suffix)
+              if(suffix == ""){
+              	throw new Error('Invalid Suffix')
+              }
+            }else{
+              tag_latest = (context.payload.repository.default_branch.indexOf(ver_minor) == 0)
+            }
+            
+            const docker_context = ver_minor+'/'+dockerdir+'/'
+            const docker_file = docker_context+'Dockerfile'
+            
+            console.log('========= OUTPUT =========')
+            console.log("tag_latest : " + tag_latest)
+            console.log('ver_full: '+ver_full)
+            console.log('ver_minor: '+ver_minor)
+            console.log('docker_context: '+docker_context)
+            console.log('docker_file: '+docker_file)
+            console.log('tag_suffix: '+suffix)
+            
+            core.setOutput('tag_latest', tag_latest)
+            core.setOutput('ver_full', ver_full)
+            core.setOutput('ver_minor', ver_minor)
+            core.setOutput('docker_context', docker_context)
+            core.setOutput('docker_file', docker_file)
+            core.setOutput('tag_suffix', tag_suffix)
       
+      - name: Check file existence
+        id: check_files
+        uses: andstor/file-existence-action@v1
+        with:
+          files: ${{ steps.pre-meta.outputs.docker_file }}
+
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v3
         with:
           images: uwischool/php-fpm
+          flavor: |
+            latest=${{ steps.pre-meta.outputs.latest }}
+            suffix=${{ steps.pre-meta.outputs.suffix }}
           tags: |
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=${{ steps.pre-meta.outputs.ver_minor }}
+            type=raw,value=${{ steps.pre-meta.outputs.ver_full }}
       
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ${{ steps.pre-meta.outputs.docker_context}}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
