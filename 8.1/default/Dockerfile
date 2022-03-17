@@ -38,7 +38,8 @@ RUN docker-php-source extract \
         zip 
 
 # Clean up
-RUN apk del --purge .dependencies \
+RUN pecl clear-cache \
+    && apk del --purge .dependencies \
     && docker-php-source delete
 
 # Copy ODBC Configs for MSSQL connection (contains UW EDW domain but no credentials)
