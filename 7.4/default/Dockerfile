@@ -37,6 +37,10 @@ RUN docker-php-source extract \
         pcntl \
         zip 
 
+# Clean up
+RUN apk del --purge .dependencies \
+    && docker-php-source delete
+
 # Copy ODBC Configs for MSSQL connection (contains UW EDW domain but no credentials)
 COPY ./freetds.conf \
      ./odbc.ini \
