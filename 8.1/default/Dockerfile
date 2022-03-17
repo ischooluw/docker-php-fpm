@@ -37,7 +37,6 @@ RUN docker-php-source extract \
         pcntl \
         zip \
     # Cleanup
-    && pecl clear-cache \
     && apk del --purge .dependencies \
     && docker-php-source delete
 
