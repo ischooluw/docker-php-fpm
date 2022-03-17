@@ -91,7 +91,7 @@ jobs:
           images: uwischool/php-fpm
           flavor: |
             latest=${{ steps.pre-meta.outputs.tag_latest }}
-            suffix=${{ steps.pre-meta.outputs.suffix }}
+            suffix=${{ steps.pre-meta.outputs.tag_suffix }}
           tags: |
             type=raw,value=${{ steps.pre-meta.outputs.ver_minor }}
             type=raw,value=${{ steps.pre-meta.outputs.ver_full }}
