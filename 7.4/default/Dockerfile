@@ -6,7 +6,6 @@ RUN docker-php-source extract \
         $PHPIZE_DEPS \
         freetds-dev \
         freetype-dev \
-		imagemagick-dev \
         libjpeg-turbo-dev \
         libpng-dev \
         libwebp-dev \
@@ -35,10 +34,9 @@ RUN docker-php-source extract \
         pdo_mysql \
         pdo_odbc \
         pcntl \
-        zip 
-
-# Clean up
-RUN apk del --purge .dependencies \
+        zip \
+    # Cleanup
+    && apk del --purge .dependencies \
     && docker-php-source delete
 
 # Copy ODBC Configs for MSSQL connection (contains UW EDW domain but no credentials)

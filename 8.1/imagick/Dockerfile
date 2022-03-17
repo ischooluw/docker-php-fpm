@@ -12,18 +12,17 @@ RUN docker-php-source extract \
         libwebp-dev \
         libzip-dev \
         unixodbc-dev \
-        libzip-dev \
     # Add some persistent packages
     && apk add --no-cache \
         freetds \
         freetype \
-        # imagemagick is big, but needed for PDF support
         imagemagick \
+        imagemagick-libs \
         libjpeg-turbo \
         libpng \
         libwebp \
-        libxml2 \
         libzip \
+        php8-pecl-imagick \
         tzdata \
         unixodbc \
     # Set configuration for GD
@@ -39,19 +38,12 @@ RUN docker-php-source extract \
         pdo_mysql \
         pdo_odbc \
         pcntl \
-        zip 
-
-RUN apk add --no-cache \
-    imagemagick \
-    imagemagick-libs \
-    php8-pecl-imagick
-
-# Install Imagick from Pecl
-RUN pecl install imagick \
-    && docker-php-ext-enable --ini-name 20-imagick.ini imagick
-
-# Clean up
-RUN pecl clear-cache \
+        zip \
+    # Install Imagick from Pecl
+    && pecl install imagick \
+    && docker-php-ext-enable --ini-name 20-imagick.ini imagick \
+    # Clean up
+    && pecl clear-cache \
     && apk del --purge .dependencies \
     && docker-php-source delete
 

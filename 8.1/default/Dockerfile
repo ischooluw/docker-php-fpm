@@ -18,7 +18,6 @@ RUN docker-php-source extract \
         libjpeg-turbo \
         libpng \
         libwebp \
-        libxml2 \
         libzip \
         tzdata \
         unixodbc \

@@ -16,10 +16,13 @@ RUN docker-php-source extract \
     && apk add --no-cache \
         freetds \
         freetype \
+        imagemagick \
+        imagemagick-libs \
         libjpeg-turbo \
         libpng \
         libwebp \
         libzip \
+        php7-imagick \
         tzdata \
         unixodbc \
     # Set configuration for GD
@@ -35,20 +38,12 @@ RUN docker-php-source extract \
         pdo_mysql \
         pdo_odbc \
         pcntl \
-        zip 
-
-# Install Imagick dependencies
-RUN apk add --no-cache \
-    imagemagick \
-    imagemagick-libs \
-	php7-imagick 
-
-# Install imagick from pecl
-RUN pecl install imagick \
-    && docker-php-ext-enable --ini-name 20-imagick.ini imagick
-
-# Clean up
-RUN pecl clear-cache \
+        zip \
+    # Install imagick from pecl
+    && pecl install imagick \
+    && docker-php-ext-enable --ini-name 20-imagick.ini imagick \
+    # Clean up
+    && pecl clear-cache \
     && apk del --purge .dependencies \
     && docker-php-source delete
 
