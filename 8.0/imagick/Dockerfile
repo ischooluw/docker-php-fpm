@@ -11,6 +11,7 @@ RUN docker-php-source extract \
         libpng-dev \
         libwebp-dev \
         libzip-dev \
+        pcre-dev \
         unixodbc-dev \
     # Add some persistent packages
     && apk add --no-cache \
@@ -31,6 +32,9 @@ RUN docker-php-source extract \
         --with-jpeg \
         --with-webp \
     && docker-php-ext-configure pdo_odbc --with-pdo-odbc=unixODBC,/usr \
+    # Add PHP Redis
+    && pecl install redis \
+    && docker-php-ext-enable redis \
     # Add some Extensions
     && docker-php-ext-install \
         gd \
