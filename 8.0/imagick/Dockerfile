@@ -1,4 +1,4 @@
-FROM php:8.0.28-fpm-alpine3.16
+FROM php:8.0.29-fpm-alpine3.16
 
 RUN docker-php-source extract \
     # Add some build packages
