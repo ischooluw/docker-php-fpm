@@ -40,7 +40,6 @@ RUN docker-php-source extract \
     # Add some Extensions
     && docker-php-ext-install \
         ctype \
-        iconv \
         gd \
         pdo \
         pdo_dblib \
