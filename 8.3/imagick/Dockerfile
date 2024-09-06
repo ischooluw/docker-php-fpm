@@ -50,7 +50,7 @@ RUN docker-php-source extract \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
-    && docker-php-source delet
+    && docker-php-source delete
 # Copy ODBC Configs for MSSQL connection (contains UW EDW domain but no credentials)
 COPY ./freetds.conf \
      ./odbc.ini \
