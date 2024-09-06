@@ -46,11 +46,12 @@ RUN docker-php-source extract \
     && docker-php-ext-enable --ini-name 20-imagick.ini imagick \
     # Clean up
     && pecl clear-cache \
-    && apt-get purge -y --auto-remove $PHPIZE_DEPS \
+    && apt-get remove --purge -y $PHPIZE_DEPS \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && docker-php-source delete
+
 # Copy ODBC Configs for MSSQL connection (contains UW EDW domain but no credentials)
 COPY ./freetds.conf \
      ./odbc.ini \
