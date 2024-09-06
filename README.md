@@ -15,7 +15,9 @@ Hosted on Docker Hub as [uwischool/php-fpm](https://hub.docker.com/r/uwischool/p
 
 Adds PHP modules required to run most Laravel applications. 
 
-Built from official PHP-FPM image on Alpine Linux. Adds the following PHP Modules to the base PHP image:
+Versions 5.6 - 8.2 are built from official PHP-FPM image on Alpine Linux. Version 8.3 is built from the official PHP-FPM image on Debian.
+
+Adds the following PHP Modules to the base PHP image:
 
 `gd`, `pdo_dblib`, `pdo_mysql`, `pdo_odbc`, `pcntl`, `zip`
 
