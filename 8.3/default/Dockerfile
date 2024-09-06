@@ -2,7 +2,7 @@ FROM php:8.3.11-fpm
 
 RUN docker-php-source extract \
     # Add some build packages
-    && apk add --no-cache --virtual .dependencies \
+    && apt-get install --no-cache --virtual .dependencies \
         $PHPIZE_DEPS \
         freetds-dev \
         freetype-dev \
@@ -13,7 +13,7 @@ RUN docker-php-source extract \
         pcre-dev \
         unixodbc-dev \
     # Add some persistent packages
-    && apk add --no-cache \
+    && apt-get install --no-cache \
         freetds \
         freetype \
         libjpeg-turbo \
@@ -40,7 +40,7 @@ RUN docker-php-source extract \
         pcntl \
         zip \
     # Cleanup
-    && apk del --purge .dependencies \
+    && apt-get remove --purge .dependencies \
     && docker-php-source delete
 
 # Copy ODBC Configs for MSSQL connection (contains UW EDW domain but no credentials)

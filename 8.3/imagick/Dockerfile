@@ -2,7 +2,7 @@ FROM php:8.3.8-fpm
 
 RUN docker-php-source extract \
     # Add some build packages
-    && apk add --no-cache --virtual .dependencies \
+    && apt-get install --no-cache --virtual .dependencies \
         $PHPIZE_DEPS \
         freetds-dev \
         freetype-dev \
@@ -14,7 +14,7 @@ RUN docker-php-source extract \
         pcre-dev \
         unixodbc-dev \
     # Add some persistent packages
-    && apk add --no-cache \
+    && apt-get install --no-cache \
         freetds \
         freetype \
         imagemagick \
@@ -48,7 +48,7 @@ RUN docker-php-source extract \
     && docker-php-ext-enable --ini-name 20-imagick.ini imagick \
     # Clean up
     && pecl clear-cache \
-    && apk del --purge .dependencies \
+    && apt-get remove --purge .dependencies \
     && docker-php-source delete
 
 # Copy ODBC Configs for MSSQL connection (contains UW EDW domain but no credentials)
