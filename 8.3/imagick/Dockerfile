@@ -6,21 +6,21 @@ RUN docker-php-source extract \
         $PHPIZE_DEPS \
         freetds-dev \
         libfreetype6-dev \
+        imagemagick-dev \
         libjpeg-dev \
         libpng-dev \
         libwebp-dev \
         libzip-dev \
         libpcre3-dev \
         unixodbc-dev \
-        libmagickwand-dev \
     # Add persistent packages
     && apt-get install -y --no-install-recommends \
         freetds-bin \
         libfreetype6 \
         imagemagick \
-        libjpeg62-turbo-dev \
+        libjpeg62-turbo \
         libpng16-16 \
-        libwebp6 \
+        libwebp7 \
         libzip4 \
         tzdata \
         unixodbc \
