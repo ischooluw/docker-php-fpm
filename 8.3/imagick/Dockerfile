@@ -4,46 +4,45 @@ RUN docker-php-source extract \
     # Install dependencies and build tools
     && apt-get update && apt-get install -y --no-install-recommends \
         $PHPIZE_DEPS \
-        freetds-dev \
-        libfreetype6-dev \
-        imagemagick-dev \
-        libjpeg-dev \
-        libpng-dev \
-        libwebp-dev \
+        #libfreetype-dev \
+        #libpcre3-dev \
         libzip-dev \
-        libpcre3-dev \
+        #libpng-dev \
+        #libwebp-dev \
+        #libjpeg-dev \
         unixodbc-dev \
+        freetds-dev \
     # Add persistent packages
     && apt-get install -y --no-install-recommends \
         freetds-bin \
-        libfreetype6 \
+        #libfreetype6 \
         imagemagick \
-        libjpeg62-turbo \
-        libpng16-16 \
-        libwebp7 \
-        libzip4 \
+        #libjpeg62-turbo \
+        #libpng16-16 \
+        #libwebp7 \
+        #libzip4 \
         tzdata \
-        unixodbc \
+        #unixodbc \
     # Set configuration for GD
-    && docker-php-ext-configure gd \
-        --with-freetype=/usr/include/ \
-        --with-jpeg=/usr/include/ \
-        --with-webp=/usr/include/ \
+    #&& docker-php-ext-configure gd \
+    #    --with-freetype=/usr/include/ \
+    #    --with-jpeg=/usr/include/ \
+    #    --with-webp=/usr/include/ \
     && docker-php-ext-configure pdo_odbc --with-pdo-odbc=unixODBC,/usr \
     # Install PHP Redis
     && pecl install redis \
     && docker-php-ext-enable redis \
     # Add some PHP extensions
     && docker-php-ext-install \
-        gd \
+        #gd \
         pdo_dblib \
         pdo_mysql \
         pdo_odbc \
         pcntl \
         zip \
     # Install Imagick from Pecl
-    && pecl install imagick \
-    && docker-php-ext-enable --ini-name 20-imagick.ini imagick \
+    #&& pecl install imagick \
+    #&& docker-php-ext-enable --ini-name 20-imagick.ini imagick \
     # Clean up
     && pecl clear-cache \
     && apt-get remove --purge -y $PHPIZE_DEPS \
