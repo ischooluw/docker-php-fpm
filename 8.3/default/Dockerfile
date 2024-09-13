@@ -12,8 +12,11 @@ RUN docker-php-source extract \
         libzip-dev \
         libpcre3-dev \
         unixodbc-dev \
-        imagemagick \
-        libmagickwand-dev \
+    # Set up some persistent packages
+    && apt-get install -y --no-install-recommends \
+        zlib1g \
+        tzdata \
+        #unixodbc \    
     # Set configuration for GD
     && docker-php-ext-configure gd \
         --with-freetype \
