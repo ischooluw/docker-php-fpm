@@ -20,6 +20,7 @@ RUN docker-php-source extract \
         tzdata \
         autoconf \
         build-essential \
+        unzip \
     # Set configuration for GD
     && docker-php-ext-configure gd \
         --with-freetype \
