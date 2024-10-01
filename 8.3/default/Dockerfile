@@ -10,13 +10,16 @@ RUN docker-php-source extract \
         libpng-dev \
         libwebp-dev \
         libzip-dev \
+        zlib1g-dev \
         libpcre3-dev \
         unixodbc-dev \
     # Set up some persistent packages
     && apt-get install -y --no-install-recommends \
+        libzip4 \
         zlib1g \
         tzdata \
-        #unixodbc \    
+        autoconf \
+        build-essential \
     # Set configuration for GD
     && docker-php-ext-configure gd \
         --with-freetype \
