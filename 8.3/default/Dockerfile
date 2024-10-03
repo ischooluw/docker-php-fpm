@@ -1,26 +1,27 @@
-FROM php:8.3.11-fpm
+FROM php:8.3.12-fpm-alpine3.20
 
 RUN docker-php-source extract \
-    # Install dependencies and build tools
-    && apt-get update && apt-get install -y --no-install-recommends \
+    # Add some build packages
+    && apk add --no-cache --virtual .dependencies \
         $PHPIZE_DEPS \
         freetds-dev \
-        libfreetype6-dev \
-        libjpeg-dev \
+        freetype-dev \
+        libjpeg-turbo-dev \
         libpng-dev \
         libwebp-dev \
         libzip-dev \
-        zlib1g-dev \
-        libpcre3-dev \
+        pcre-dev \
         unixodbc-dev \
-    # Set up some persistent packages
-    && apt-get install -y --no-install-recommends \
-        libzip4 \
-        zlib1g \
+    # Add some persistent packages
+    && apk add --no-cache \
+        freetds \
+        freetype \
+        libjpeg-turbo \
+        libpng \
+        libwebp \
+        libzip \
         tzdata \
-        autoconf \
-        build-essential \
-        unzip \
+        unixodbc \
     # Set configuration for GD
     && docker-php-ext-configure gd \
         --with-freetype \
@@ -38,12 +39,8 @@ RUN docker-php-source extract \
         pdo_odbc \
         pcntl \
         zip \
-    # Clean up
-    && pecl clear-cache \
-    && apt-get remove --purge -y $PHPIZE_DEPS \
-    && apt-get autoremove -y \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
+    # Cleanup
+    && apk del --purge .dependencies \
     && docker-php-source delete
 
 # Copy ODBC Configs for MSSQL connection (contains UW EDW domain but no credentials)
