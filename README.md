@@ -4,7 +4,8 @@ Hosted on Docker Hub as [uwischool/php-fpm](https://hub.docker.com/r/uwischool/p
 
 ## Supported tags and respective Dockerfile links
 
-* [`latest`, `8.1`](https://github.com/ischooluw/docker-php-fpm/blob/main/8.1/default/Dockerfile) [`8.1-imagick`](https://github.com/ischooluw/docker-php-fpm/blob/main/8.1/imagick/Dockerfile) 
+* [`latest`, '8.3'](https://github.com/ischooluw/docker-php-fpm/blob/main/8.3/default/Dockerfile)
+* [`8.1`](https://github.com/ischooluw/docker-php-fpm/blob/main/8.1/default/Dockerfile) [`8.1-imagick`](https://github.com/ischooluw/docker-php-fpm/blob/main/8.1/imagick/Dockerfile) 
 * [`8.0`](https://github.com/ischooluw/docker-php-fpm/blob/main/8.0/default/Dockerfile) [`8.0-imagick`](https://github.com/ischooluw/docker-php-fpm/blob/main/8.0/imagick/Dockerfile) 
 * [`7.4`](https://github.com/ischooluw/docker-php-fpm/blob/main/7.4/default/Dockerfile) [`7.4-imagick`](https://github.com/ischooluw/docker-php-fpm/blob/main/7.4/imagick/Dockerfile) 
 * [`7.2`](https://github.com/ischooluw/docker-php-fpm/blob/main/7.2/default/Dockerfile) [`7.2-mcrypt`](https://github.com/ischooluw/docker-php-fpm/blob/main/7.2/mcrypt/Dockerfile) 
@@ -15,8 +16,7 @@ Hosted on Docker Hub as [uwischool/php-fpm](https://hub.docker.com/r/uwischool/p
 
 Adds PHP modules required to run most Laravel applications. 
 
-Versions 5.6 - 8.2 are built from official PHP-FPM image on Alpine Linux. Version 8.3 is built from the official PHP-FPM image on Debian.
-
+Versions 5.6 - 8.3 are built from official PHP-FPM image on Alpine Linux. 
 Adds the following PHP Modules to the base PHP image:
 
 `gd`, `pdo_dblib`, `pdo_mysql`, `pdo_odbc`, `pcntl`, `zip`
