@@ -21,7 +21,7 @@ updates:
       interval: "daily"
     open-pull-requests-limit: 0
   - package-ecosystem: "docker"
-    directory: "/8.5/imagick"
+    directory: "/8.5/default"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 0
