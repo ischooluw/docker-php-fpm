@@ -1,8 +1,3 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
 name: Publish Docker image
 
 on:
@@ -15,19 +10,21 @@ jobs:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions:
+      contents: read
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v2
-      
+        uses: actions/checkout@v4
+
       - name: Log in to Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Extract major.minor, suffix, and dockerfile location
         id: pre-meta
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           script: |
             if(!context.ref.match(/^refs\/tags\/v\d+\.\d+\.\d+(\-[a-zA-Z0-9]+)?$/)){
@@ -78,16 +75,17 @@ jobs:
             core.setOutput('docker_context', docker_context)
             core.setOutput('docker_file', docker_file)
             core.setOutput('tag_suffix', (tag_suffix != "" ? '-'+tag_suffix : ""))
-      
+
       - name: Check file existence
         id: check_files
-        uses: andstor/file-existence-action@v2
+        uses: andstor/file-existence-action@v3
         with:
           files: ${{ steps.pre-meta.outputs.docker_file }}
 
       - name: Extract metadata (tags, labels) for Docker
+        if: steps.check_files.outputs.files_exists == 'true'
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: uwischool/php-fpm
           flavor: |
@@ -96,11 +94,16 @@ jobs:
           tags: |
             type=raw,value=${{ steps.pre-meta.outputs.ver_minor }}
             type=raw,value=${{ steps.pre-meta.outputs.ver_full }}
-      
+
+      - name: Set up Docker Buildx
+        if: steps.check_files.outputs.files_exists == 'true'
+        uses: docker/setup-buildx-action@v3
+
       - name: Build and push Docker image
-        uses: docker/build-push-action@v4
+        if: steps.check_files.outputs.files_exists == 'true'
+        uses: docker/build-push-action@v6
         with:
-          context: ${{ steps.pre-meta.outputs.docker_context}}
+          context: ${{ steps.pre-meta.outputs.docker_context }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
