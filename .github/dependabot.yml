@@ -1,32 +1,27 @@
 version: 2
 updates:
   - package-ecosystem: "docker"
-    directory: "/7.4/default"
+    directory: "/8.2/default"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 0
   - package-ecosystem: "docker"
-    directory: "/7.4/imagick"
+    directory: "/8.2/imagick"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 0
   - package-ecosystem: "docker"
-    directory: "/8.0/default"
+    directory: "/8.3/default"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 0
   - package-ecosystem: "docker"
-    directory: "/8.0/imagick"
+    directory: "/8.4/default"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 0
   - package-ecosystem: "docker"
-    directory: "/8.1/default"
-    schedule:
-      interval: "daily"
-    open-pull-requests-limit: 0
-  - package-ecosystem: "docker"
-    directory: "/8.1/imagick"
+    directory: "/8.5/imagick"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 0
