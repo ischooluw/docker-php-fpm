@@ -28,9 +28,12 @@ RUN docker-php-source extract \
         --with-jpeg \
         --with-webp \
     && docker-php-ext-configure pdo_odbc --with-pdo-odbc=unixODBC,/usr \
-    # Add PHP Redis
-    && pecl install redis \
-    && docker-php-ext-enable redis \
+    # Add PHP Redis (pinned GitHub release; pecl.php.net downloads were timing out)
+    && mkdir -p /usr/src/php/ext/redis \
+    && curl -fsSL https://github.com/phpredis/phpredis/archive/refs/tags/6.3.0.tar.gz -o /tmp/phpredis.tar.gz \
+    && echo "cb8f81df1a275599e4f8ddcfec7e1f65ed1953e6f5673649149fd680ebff4cad  /tmp/phpredis.tar.gz" | sha256sum -c - \
+    && tar -xzf /tmp/phpredis.tar.gz -C /usr/src/php/ext/redis --strip-components=1 \
+    && rm /tmp/phpredis.tar.gz \
     # Add some Extensions
     && docker-php-ext-install \
         gd \
@@ -38,6 +41,7 @@ RUN docker-php-source extract \
         pdo_mysql \
         pdo_odbc \
         pcntl \
+        redis \
         zip \
     # Cleanup
     && apk del --purge .dependencies \
