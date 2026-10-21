@@ -54,7 +54,7 @@ COPY ./freetds.conf \
      /etc/
 
 # Make errors log to STDOUT (Updated from sed command to prevent silent failure if the directive is not found in the default config)
-RUN echo 'error_log = /proc/self/fd/2' > /usr/local/etc/php-fpm.d/zz-error-log.conf
+RUN printf '[global]\nerror_log = /proc/self/fd/2\n' > /usr/local/etc/php-fpm.d/zz-error-log.conf
 
 # Copy php.ini to image
 COPY ./php.ini /usr/local/etc/php/php.ini
