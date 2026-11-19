@@ -23,7 +23,6 @@ RUN docker-php-source extract \
         libpng \
         libwebp \
         libzip \
-        php82-pecl-imagick \
         tzdata \
         unixodbc \
     # Set configuration for GD
